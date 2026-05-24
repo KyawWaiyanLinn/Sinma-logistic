@@ -14,25 +14,21 @@
         .search-box input{border:none;outline:none;flex:1;font-size:14px}
         .search-box button{background:#ff5000;color:white;border:none;padding:8px 16px;border-radius:16px;font-weight:700;cursor:pointer}
         .categories{display:flex;gap:8px;overflow-x:auto;padding:12px 16px}
-        .categories span{background:white;padding:10px 16px;border-radius:20px;white-space:nowrap;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-        .categories span:active{background:#fff0e8}
+        .categories span{background:white;padding:10px 16px;border-radius:20px;white-space:nowrap;font-size:13px;font-weight:600;cursor:pointer}
         .categories span.active{background:#ff5000;color:white}
         .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px}
         .product-card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);cursor:pointer}
-        .product-card:active{transform:scale(.97)}
         .product-card img{width:100%;height:200px;object-fit:cover;background:#f0f0f0}
         .product-card .info{padding:10px}
         .product-card .name{font-size:12px;line-height:1.4;height:34px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:6px}
         .product-card .price{font-size:16px;font-weight:800;color:#ff5000}
-        .product-card .shop{font-size:10px;color:#999;margin-top:2px}
+        .product-card .shop{font-size:10px;color:#999}
         .cart-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:500px;width:100%;background:white;border-top:1px solid #eee;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;z-index:50}
         .cart-btn{background:#ff5000;color:white;border:none;padding:10px 24px;border-radius:20px;font-weight:700;cursor:pointer}
         .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:100;display:flex;align-items:flex-end;justify-content:center}
         .modal-content{background:white;border-radius:20px 20px 0 0;padding:20px;max-width:500px;width:100%;max-height:70vh;overflow-y:auto}
         .btn-orange{background:#ff5000;color:white;font-weight:700;border:none;border-radius:20px;padding:14px;font-size:15px;cursor:pointer;width:100%}
         .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:10px 20px;border-radius:20px;font-size:13px;z-index:200}
-        @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-        .spinner{animation:spin 1s linear infinite}
     </style>
 </head>
 <body>
@@ -58,10 +54,7 @@
     <div style="margin:16px;font-size:16px;font-weight:800;">🔥 Hot Products</div>
     
     <div id="productGrid" class="product-grid">
-        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#999;">
-            <span class="spinner" style="font-size:32px;color:#ff5000;display:block;margin-bottom:12px;">⏳</span>
-            Loading...
-        </div>
+        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#999;">⏳ Loading...</div>
     </div>
     
     <div class="cart-bar">
@@ -77,13 +70,14 @@ const SHEET='https://script.google.com/macros/s/AKfycbz3zejT0DgFLpkNMqxAb7nSjs7I
 const API='https://api.justoneapi.com/api/taobao';
 const RATE=650;
 
+function toYuan(f){return parseFloat(f)/100}
 function toKs(y){return Math.round(y*RATE)}
 function fmtKs(a){return a.toLocaleString('en-US')+' Ks'}
 function toast(m){const t=document.createElement('div');t.className='toast';t.innerText=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2000)}
 
 async function loadProducts(kw){
     const grid=document.getElementById('productGrid');
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;"><span class="spinner" style="font-size:32px;color:#ff5000;display:block;">⏳</span></div>';
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;">⏳ Loading...</div>';
     try{
         const url=`${API}/search/v1?token=${TOKEN}&keyword=${encodeURIComponent(kw)}&page=1&sort=sale&tmall=1`;
         const res=await fetch(url);
@@ -97,28 +91,18 @@ async function loadProducts(kw){
                     <div class="info"><div class="name">${item.itemName||''}</div><div class="price">${fmtKs(toKs(p))}</div><div class="shop">${item.shopName||''}</div></div>
                 </div>`;
             }).join('');
-        }else{
-            grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">မတွေ့ပါ</div>';
-        }
-    }catch(e){
-        grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff5000;">Error</div>';
-    }
+        }else{grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">မတွေ့ပါ</div>'}
+    }catch(e){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff5000;">Error: '+e.message+'</div>'}
     document.querySelectorAll('.categories span').forEach(s=>s.classList.remove('active'));
 }
 
-function searchProducts(){
-    const kw=document.getElementById('searchKeyword').value.trim();
-    if(!kw)return toast('နာမည်ထည့်ပါ');
-    document.querySelectorAll('.categories span').forEach(s=>s.classList.remove('active'));
-    loadProducts(kw);
-}
+function searchProducts(){const kw=document.getElementById('searchKeyword').value.trim();if(!kw)return toast('နာမည်ထည့်ပါ');loadProducts(kw)}
 
 function addToCart(id,price,title){
     const cart=JSON.parse(localStorage.getItem('sc')||'[]');
     cart.push({id,priceYuan:parseFloat(price),qty:1,title,totalKs:toKs(parseFloat(price))});
     localStorage.setItem('sc',JSON.stringify(cart));
-    updateCartUI();
-    toast('✅ Cart ထဲထည့်ပြီး');
+    updateCartUI();toast('✅ Cart ထဲထည့်ပြီး — '+fmtKs(toKs(parseFloat(price))));
 }
 
 function updateCartUI(){
@@ -129,18 +113,18 @@ function updateCartUI(){
 
 function openCart(){
     const cart=JSON.parse(localStorage.getItem('sc')||'[]');
-    const modal=document.createElement('div');modal.className='modal';modal.style.display='flex';
-    modal.onclick=function(e){if(e.target===modal)modal.remove()};
-    modal.innerHTML=`<div class="modal-content">
+    const m=document.createElement('div');m.className='modal';m.style.display='flex';
+    m.onclick=function(e){if(e.target===m)m.remove()};
+    m.innerHTML=`<div class="modal-content">
         <div style="display:flex;justify-content:space-between;margin-bottom:16px;"><h3>🛒 ခြင်းတောင်း</h3><button onclick="this.closest('.modal').remove()" style="background:none;border:none;font-size:20px;">✕</button></div>
         <div style="max-height:300px;overflow-y:auto;margin-bottom:12px;">${cart.length?cart.map((item,i)=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;"><div><p style="font-size:12px;">${item.title}</p><p style="font-weight:700;color:#ff5000;">${fmtKs(item.totalKs)}</p></div><button onclick="removeItem(${i});this.closest('.modal').remove();openCart()" style="color:#ff5000;background:none;border:none;">🗑</button></div>`).join(''):'<p style="color:#999;text-align:center;padding:20px;">ပစ္စည်းမရှိပါ</p>'}</div>
         <input type="tel" id="cartPhone" placeholder="ဖုန်းနံပါတ်ထည့်ပါ" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:12px;">
         <button onclick="submitOrder()" class="btn-orange">📤 Order တင်မယ်</button>
     </div>`;
-    document.body.appendChild(modal);
+    document.body.appendChild(m);
 }
 
-function removeItem(i){const cart=JSON.parse(localStorage.getItem('sc')||'[]');cart.splice(i,1);localStorage.setItem('sc',JSON.stringify(cart));updateCartUI()}
+function removeItem(i){const c=JSON.parse(localStorage.getItem('sc')||'[]');c.splice(i,1);localStorage.setItem('sc',JSON.stringify(c));updateCartUI()}
 async function submitOrder(){
     const cart=JSON.parse(localStorage.getItem('sc')||'[]');
     const phone=document.getElementById('cartPhone')?.value?.trim();
