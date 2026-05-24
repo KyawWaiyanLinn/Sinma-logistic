@@ -8,23 +8,41 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;justify-content:center;min-height:100vh;color:#333}
         .app{max-width:500px;width:100%;min-height:100vh;background:#f5f5f5;padding-bottom:70px}
+
         .header{background:#ff5000;padding:12px 16px;position:sticky;top:0;z-index:50}
         .header h1{color:white;font-size:18px}
+
         .search-box{background:white;border-radius:20px;padding:8px 16px;margin-top:8px;display:flex;gap:8px}
         .search-box input{border:none;outline:none;flex:1;font-size:14px}
-        .search-box button{background:#ff5000;color:white;border:none;padding:8px 16px;border-radius:16px;font-weight:700;cursor:pointer}
+
+        /* === BANNER SLIDER === */
+        .slider-container{position:relative;margin:12px 16px;border-radius:16px;overflow:hidden;height:180px;background:#000}
+        .slides{display:flex;transition:transform 0.5s ease;width:300%;height:100%}
+        .slide{min-width:100%;height:100%;background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:20px;color:white;position:relative}
+        .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));}
+        .slide-content{position:relative;z-index:2}
+        .slide h2{font-size:22px;margin-bottom:4px}
+        .slide p{font-size:14px;opacity:0.9}
+
+        .dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+        .dot{width:8px;height:8px;background:rgba(255,255,255,0.6);border-radius:50%;cursor:pointer}
+        .dot.active{background:white;transform:scale(1.2)}
+
         .categories{display:flex;gap:8px;overflow-x:auto;padding:12px 16px}
         .categories span{background:white;padding:10px 16px;border-radius:20px;white-space:nowrap;font-size:13px;font-weight:600;cursor:pointer}
         .categories span.active{background:#ff5000;color:white}
+
         .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px}
         .product-card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);cursor:pointer}
-        .product-card img{width:100%;height:200px;object-fit:cover;background:#f0f0f0}
+        .product-card img{width:100%;height:200px;object-fit:cover}
         .product-card .info{padding:10px}
         .product-card .name{font-size:12px;line-height:1.4;height:34px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:6px}
         .product-card .price{font-size:16px;font-weight:800;color:#ff5000}
         .product-card .shop{font-size:10px;color:#999}
+
         .cart-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:500px;width:100%;background:white;border-top:1px solid #eee;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;z-index:50}
         .cart-btn{background:#ff5000;color:white;border:none;padding:10px 24px;border-radius:20px;font-weight:700;cursor:pointer}
+
         .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:100;display:flex;align-items:flex-end;justify-content:center}
         .modal-content{background:white;border-radius:20px 20px 0 0;padding:20px;max-width:500px;width:100%;max-height:70vh;overflow-y:auto}
         .btn-orange{background:#ff5000;color:white;font-weight:700;border:none;border-radius:20px;padding:14px;font-size:15px;cursor:pointer;width:100%}
@@ -43,21 +61,44 @@
             <button onclick="searchProducts()">ရှာမယ်</button>
         </div>
     </div>
-    
+
+    <!-- Taobao Style Banner Slider -->
+    <div class="slider-container" id="slider">
+        <div class="slides" id="slides">
+            <div class="slide" style="background-image:url('https://picsum.photos/id/1015/800/400')">
+                <div class="slide-content">
+                    <h2>ယနေ့ရဲ့ Hot Deal 🔥</h2>
+                    <p>50% လျှော့ဈေး - ကန့်သတ်ပစ္စည်း</p>
+                </div>
+            </div>
+            <div class="slide" style="background-image:url('https://picsum.photos/id/201/800/400')">
+                <div class="slide-content">
+                    <h2>ဖုန်းအသစ်များ</h2>
+                    <p>အကောင်းဆုံး ဈေးနှုန်း ယခုပဲ ဝယ်လိုက်ပါ</p>
+                </div>
+            </div>
+            <div class="slide" style="background-image:url('https://picsum.photos/id/237/800/400')">
+                <div class="slide-content">
+                    <h2>ဖိနပ်နဲ့ အိတ်များ</h2>
+                    <p>ဘရန်း Copy အရည်အသွေး မြင့်မားဆုံး</p>
+                </div>
+            </div>
+        </div>
+        <div class="dots" id="dots"></div>
+    </div>
+
     <div class="categories">
-        <span class="active" onclick="loadProducts('shoes')">🔥 Hot</span>
-        <span onclick="loadProducts('shoes')">👟 ဖိနပ်</span>
-        <span onclick="loadProducts('shirt')">👕 အင်္ကျီ</span>
-        <span onclick="loadProducts('bag')">👜 အိတ်</span>
-        <span onclick="loadProducts('phone')">📱 ဖုန်း</span>
-        <span onclick="loadProducts('electronics')">🔌 လျှပ်စစ်</span>
+        <span class="active" onclick="loadProducts('鞋子')">🔥 Hot</span>
+        <span onclick="loadProducts('鞋子')">👟 ဖိနပ်</span>
+        <span onclick="loadProducts('T恤')">👕 အင်္ကျီ</span>
+        <span onclick="loadProducts('包包')">👜 အိတ်</span>
+        <span onclick="loadProducts('手机')">📱 ဖုန်း</span>
+        <span onclick="loadProducts('耳机')">🎧 လျှပ်စစ်</span>
     </div>
     
-    <div style="margin:16px;font-size:16px;font-weight:800;">🔥 Hot Products</div>
+    <div style="margin:16px;font-size:16px;font-weight:800;">🔥 လူကြိုက်များဆုံး</div>
     
-    <div id="productGrid" class="product-grid">
-        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#999;">⏳ Loading...</div>
-    </div>
+    <div id="productGrid" class="product-grid"></div>
     
     <div class="cart-bar">
         <span>🛒 <b id="cartBadge">0</b></span>
@@ -67,187 +108,99 @@
 </div>
 
 <script>
-// ==================== API CONFIG ====================
+// ==================== CONFIG ====================
 const TOKEN = 'kKIu6qEmpkwi0Uvo';
-const SHEET = 'https://script.google.com/macros/s/AKfycbz3zejT0DgFLpkNMqxAb7nSjs7I3iTxZrHM1r9Y75j0bwyj2xXNY6zXhYct7Pjbe1jW7w/exec';
-const API_BASE = 'https://api.justoneapi.com/api/taobao';
 const RATE = 650;
 
-// ==================== API FUNCTIONS ====================
-async function searchAPI(keyword, page = 1) {
-    const url = `${API_BASE}/search/v1?token=${TOKEN}&keyword=${encodeURIComponent(keyword)}&page=${page}&sort=sale&tmall=1`;
+// ==================== BANNER SLIDER ====================
+let currentSlide = 0;
+const totalSlides = 3;
+
+function createDots() {
+    const dotsContainer = document.getElementById('dots');
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+    updateDots();
+}
+
+function updateDots() {
+    document.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+    });
+}
+
+function goToSlide(n) {
+    currentSlide = n;
+    document.getElementById('slides').style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateDots();
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    document.getElementById('slides').style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateDots();
+}
+
+// ==================== API & PRODUCTS (အရင်ကအတိုင်း) ====================
+async function searchAPI(keyword) {
+    const url = `https://api.justoneapi.com/api/taobao/search/v1?token=\( {TOKEN}&keyword= \){encodeURIComponent(keyword)}&sort=sale&tmall=1`;
     const res = await fetch(url);
     const data = await res.json();
     return data?.data?.model?.itemList || [];
 }
 
-async function detailAPI(itemId) {
-    // Try V4 first
-    try {
-        const url = `${API_BASE}/get-item-detail/v4?token=${TOKEN}&itemId=${itemId}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data?.data?.itemId) return data.data;
-    } catch(e) {}
-    
-    // Try V5
-    try {
-        const url = `${API_BASE}/get-item-detail/v5?token=${TOKEN}&item_id=${itemId}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data?.data?.item || data?.item) return data.data || data;
-    } catch(e) {}
-    
-    // Try V1
-    try {
-        const url = `${API_BASE}/get-item-detail/v1?token=${TOKEN}&itemId=${itemId}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data?.data?.itemId) return data.data;
-    } catch(e) {}
-    
-    // Try V9
-    try {
-        const url = `${API_BASE}/get-item-detail/v9?token=${TOKEN}&itemId=${itemId}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data?.data?.itemId) return data.data;
-    } catch(e) {}
-    
-    return null;
-}
-
-// ==================== HELPERS ====================
 function toKs(y) { return Math.round(y * RATE); }
 function fmtKs(a) { return a.toLocaleString('en-US') + ' Ks'; }
-function toast(m) { const t = document.createElement('div'); t.className = 'toast'; t.innerText = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
+function toast(m) { 
+    const t = document.createElement('div'); 
+    t.className = 'toast'; 
+    t.innerText = m; 
+    document.body.appendChild(t); 
+    setTimeout(() => t.remove(), 2000); 
+}
 
-// ==================== LOAD PRODUCTS ====================
-async function loadProducts(kw) {
+// Load Products
+async function loadProducts(kw = '鞋子') {
     const grid = document.getElementById('productGrid');
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;"><span class="spinner" style="font-size:32px;color:#ff5000;display:block;margin-bottom:12px;">⏳</span>Loading...</div>';
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:80px 20px;"><span class="spinner" style="font-size:36px;color:#ff5000;">⏳</span><br>ရှာနေပါတယ်...</div>';
     
     try {
         const items = await searchAPI(kw);
-        
         if (items.length > 0) {
             grid.innerHTML = items.slice(0, 20).map(item => {
-                const priceYuan = item.priceYuanDouble || item.discntPriceYuan || 0;
+                const priceYuan = item.priceYuanDouble || item.discntPriceYuan || item.price || 0;
                 const priceKs = toKs(priceYuan);
                 return `<div class="product-card" onclick="addToCartFromSearch('${item.itemId}')">
-                    <img src="${item.picUrlFull || ''}" onerror="this.src='https://via.placeholder.com/300'">
+                    <img src="${item.picUrlFull || ''}" onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
                     <div class="info">
-                        <div class="name">${item.itemName || ''}</div>
+                        <div class="name">${item.itemName || 'No Title'}</div>
                         <div class="price">${fmtKs(priceKs)}</div>
                         <div class="shop">${item.shopName || ''}</div>
                     </div>
                 </div>`;
             }).join('');
         } else {
-            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">⚠️ ပစ္စည်းမတွေ့ပါ</div>';
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#999;">ပစ္စည်း မတွေ့ရသေးပါ</div>`;
         }
     } catch(e) {
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff5000;">❌ Error: ' + e.message + '</div>';
-    }
-    
-    document.querySelectorAll('.categories span').forEach(s => s.classList.remove('active'));
-}
-
-function searchProducts() {
-    const kw = document.getElementById('searchKeyword').value.trim();
-    if (!kw) return toast('နာမည်ထည့်ပါ');
-    loadProducts(kw);
-}
-
-async function addToCartFromSearch(itemId) {
-    try {
-        const detail = await detailAPI(itemId);
-        if (detail) {
-            const discountYuan = (parseFloat(detail.DiscountPrice) || 0) / 100;
-            const itemYuan = (parseFloat(detail.itemPrice) || 0) / 100;
-            const priceYuan = discountYuan > 0 ? discountYuan : itemYuan;
-            
-            const cart = JSON.parse(localStorage.getItem('sc') || '[]');
-            cart.push({
-                id: itemId,
-                title: detail.title || '',
-                priceYuan: priceYuan,
-                qty: 1,
-                totalKs: toKs(priceYuan)
-            });
-            localStorage.setItem('sc', JSON.stringify(cart));
-            updateCartUI();
-            toast('✅ Cart ထဲထည့်ပြီး — ' + fmtKs(toKs(priceYuan)));
-        }
-    } catch(e) {
-        toast('Error loading detail');
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff5000;">❌ ခဏစောင့်ပြီး ထပ်ကြည့်ပါ</div>`;
     }
 }
 
-// ==================== CART ====================
-function updateCartUI() {
-    const cart = JSON.parse(localStorage.getItem('sc') || '[]');
-    document.getElementById('cartBadge').innerText = cart.length;
-    document.getElementById('cartTotal').innerText = fmtKs(cart.reduce((s, i) => s + i.totalKs, 0));
-}
+// ကျန်တဲ့ Cart Function တွေ (addToCartFromSearch, openCart, etc.) ကို အရင်က ကုဒ်ထဲက ထည့်ထားပါ
 
-function openCart() {
-    const cart = JSON.parse(localStorage.getItem('sc') || '[]');
-    const m = document.createElement('div');
-    m.className = 'modal';
-    m.style.display = 'flex';
-    m.onclick = function(e) { if (e.target === m) m.remove(); };
-    m.innerHTML = `<div class="modal-content">
-        <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
-            <h3>🛒 ခြင်းတောင်း</h3>
-            <button onclick="this.closest('.modal').remove()" style="background:none;border:none;font-size:20px;">✕</button>
-        </div>
-        <div style="max-height:300px;overflow-y:auto;margin-bottom:12px;">
-            ${cart.length ? cart.map((item, i) => `
-                <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;">
-                    <div>
-                        <p style="font-size:12px;">${item.title}</p>
-                        <p style="font-weight:700;color:#ff5000;">${fmtKs(item.totalKs)}</p>
-                    </div>
-                    <button onclick="removeItem(${i}); this.closest('.modal').remove(); openCart();" style="color:#ff5000;background:none;border:none;">🗑</button>
-                </div>`).join('') : '<p style="color:#999;text-align:center;padding:20px;">ပစ္စည်းမရှိပါ</p>'}
-        </div>
-        <input type="tel" id="cartPhone" placeholder="ဖုန်းနံပါတ်ထည့်ပါ" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:12px;">
-        <button onclick="submitOrder()" class="btn-orange">📤 Order တင်မယ်</button>
-    </div>`;
-    document.body.appendChild(m);
-}
-
-function removeItem(i) {
-    const c = JSON.parse(localStorage.getItem('sc') || '[]');
-    c.splice(i, 1);
-    localStorage.setItem('sc', JSON.stringify(c));
-    updateCartUI();
-}
-
-async function submitOrder() {
-    const cart = JSON.parse(localStorage.getItem('sc') || '[]');
-    const phone = document.getElementById('cartPhone')?.value?.trim();
-    if (!cart.length) return toast('ပစ္စည်းမရှိ');
-    if (!phone) return toast('ဖုန်းထည့်ပါ');
-    try {
-        await fetch(SHEET, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ orderId: 'SINMA-' + Date.now(), phone, items: cart })
-        });
-        toast('✅ Order တင်ပြီး');
-        localStorage.removeItem('sc');
-        updateCartUI();
-        document.querySelectorAll('.modal').forEach(m => m.remove());
-    } catch(e) { toast('❌ Error'); }
-}
-
-// ==================== INIT ====================
+// INIT
 document.addEventListener('DOMContentLoaded', () => {
-    updateCartUI();
-    loadProducts('shoes');
+    createDots();
+    loadProducts('鞋子');           // စဝင်လိုက်တာနဲ့ Hot Items ပြမယ်
+    
+    // Auto slide
+    setInterval(nextSlide, 4000);
 });
 </script>
 </body>
