@@ -3,96 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>SINMA Mall • Direct API</title>
+    <title>Sinma Logistics • Premium Sourcing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg: #f5f5f5; --white: #fff; --primary: #ff5000; --text: #333; }
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-card: #111827;
+            --blue: #3b82f6;
+            --blue-light: #60a5fa;
+            --amber: #f59e0b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: rgba(59,130,246,0.2);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; justify-content: center; min-height: 100vh; color: var(--text); }
-        .app-container { max-width: 500px; width: 100%; min-height: 100vh; background: var(--bg); padding-bottom: 70px; }
-        .header { background: var(--primary); padding: 12px 16px; position: sticky; top: 0; z-index: 50; }
-        .search-box { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
-        .search-box input { border: none; outline: none; flex: 1; font-size: 14px; background: transparent; }
-        .search-btn { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 16px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px; scrollbar-width: none; }
-        .categories::-webkit-scrollbar { display: none; }
-        .cat-item { background: var(--white); padding: 10px 16px; border-radius: 20px; white-space: nowrap; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 6px; }
-        .cat-item:active { transform: scale(0.95); background: #fff0e8; }
-        .cat-item.active { background: var(--primary); color: white; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px; }
-        .product-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); cursor: pointer; }
-        .product-card:active { transform: scale(0.97); }
-        .product-card img { width: 100%; height: 200px; object-fit: cover; background: #f0f0f0; }
-        .product-card .info { padding: 10px; }
-        .product-card .name { font-size: 12px; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 34px; margin-bottom: 6px; }
-        .product-card .price { font-size: 16px; font-weight: 800; color: var(--primary); }
-        .product-card .shop { font-size: 10px; color: #999; margin-top: 2px; }
-        .cart-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); max-width: 500px; width: 100%; background: white; border-top: 1px solid #eee; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; z-index: 50; }
-        .cart-icon { position: relative; font-size: 24px; color: #333; }
-        .cart-badge { position: absolute; top: -8px; right: -10px; background: var(--primary); color: white; font-size: 10px; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
-        .modal-content { background: white; border-radius: 20px 20px 0 0; padding: 20px; max-width: 500px; width: 100%; max-height: 70vh; overflow-y: auto; }
-        .btn-orange { background: linear-gradient(135deg, #ff5000, #ff6a00); color: white; font-weight: 700; border: none; border-radius: 20px; padding: 14px; font-size: 15px; cursor: pointer; width: 100%; }
-        .btn-orange:active { transform: scale(0.97); }
+        
+        body {
+            background: var(--bg-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 0; color: var(--text-primary);
+        }
+        
+        .app-container {
+            max-width: 500px; width: 100%; min-height: 100vh;
+            background: linear-gradient(180deg, #0a0e1a 0%, #0f172a 50%, #0a0e1a 100%);
+            position: relative; overflow-y: auto; padding-bottom: 80px;
+            box-shadow: 0 0 60px rgba(59,130,246,0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 16px; position: sticky; top: 0; z-index: 50;
+            backdrop-filter: blur(20px);
+        }
+        
+        .logo {
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 20px rgba(37,99,235,0.3);
+        }
+        
+        .logo-text {
+            font-size: 18px; font-weight: 900; color: #f1f5f9;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-sub {
+            font-size: 9px; color: #60a5fa; letter-spacing: 2px; text-transform: uppercase;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 16px; margin: 12px 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .card-accent {
+            background: linear-gradient(135deg, #1e293b, #111827);
+            border: 1px solid rgba(245,158,11,0.3);
+        }
+        
+        /* Inputs */
+        .input-field {
+            background: #0f172a; border: 1px solid #1e3a5f; color: #f1f5f9;
+            border-radius: 12px; padding: 14px 16px; width: 100%;
+            font-size: 14px; outline: none; transition: all 0.3s;
+        }
+        
+        .input-field:focus {
+            border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+        }
+        
+        .input-field::placeholder { color: #475569; }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white; font-weight: 700; border: none; border-radius: 12px;
+            padding: 14px 20px; cursor: pointer; font-size: 14px;
+            transition: all 0.3s; display: flex; align-items: center;
+            justify-content: center; gap: 8px; width: 100%;
+            box-shadow: 0 4px 15px rgba(37,99,235,0.3);
+        }
+        
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.5; }
+        
+        .btn-secondary {
+            background: transparent; border: 1px solid rgba(245,158,11,0.5);
+            color: #f59e0b; font-weight: 600; border-radius: 12px;
+            padding: 12px; cursor: pointer; font-size: 13px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: all 0.3s;
+        }
+        
+        .btn-cart-float {
+            position: fixed; bottom: 90px; right: 20px; z-index: 40;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none; color: white; font-size: 22px;
+            box-shadow: 0 8px 25px rgba(245,158,11,0.4);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        
+        /* Tags */
+        .tag {
+            display: inline-block; padding: 4px 10px; border-radius: 8px;
+            font-size: 10px; font-weight: 700;
+        }
+        
+        .tag-blue { background: rgba(59,130,246,0.2); color: #60a5fa; }
+        .tag-amber { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .tag-green { background: rgba(16,185,129,0.2); color: #34d399; }
+        
+        /* Search Results */
+        .search-item {
+            background: #0f172a; border: 1px solid #1e293b;
+            border-radius: 14px; padding: 12px; cursor: pointer;
+            transition: all 0.2s; margin-bottom: 8px;
+            display: flex; gap: 12px; align-items: center;
+        }
+        
+        .search-item:hover, .search-item:active {
+            border-color: #3b82f6; background: #1a2740;
+        }
+        
+        /* SKU Options */
+        .sku-btn {
+            background: #0f172a; border: 2px solid #1e3a5f;
+            border-radius: 12px; padding: 12px; cursor: pointer;
+            text-align: center; font-size: 12px; color: #cbd5e1;
+            transition: all 0.2s;
+        }
+        
+        .sku-btn.selected {
+            border-color: #f59e0b; background: rgba(245,158,11,0.1);
+            color: #f59e0b; font-weight: 700;
+        }
+        
+        .sku-btn img { width: 40px; height: 40px; object-fit: cover; border-radius: 8px; margin: 0 auto 6px; display: block; }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7); z-index: 100;
+            display: flex; align-items: flex-end; justify-content: center;
+        }
+        
+        .modal-sheet {
+            background: #111827; border-radius: 24px 24px 0 0; padding: 20px;
+            max-width: 500px; width: 100%; max-height: 75vh; overflow-y: auto;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Animations */
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .animate-spin { animation: spin 1s linear infinite; }
-        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 600; z-index: 200; }
-        .popup { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .popup-card { background: white; border-radius: 24px; padding: 32px 24px; text-align: center; max-width: 350px; width: 90%; }
+        
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .slide-up { animation: slideUp 0.3s ease; }
+        
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .pulse { animation: pulse 2s ease infinite; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 2px; }
+        
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: #10b981; color: white; padding: 12px 24px;
+            border-radius: 30px; font-size: 13px; font-weight: 700;
+            z-index: 200; animation: slideUp 0.3s ease;
+        }
     </style>
 </head>
 <body>
 
-<div id="welcomePopup" class="popup">
-    <div class="popup-card">
-        <div style="font-size:60px;">🛍️</div>
-        <h2 style="font-size:20px;font-weight:900;color:#333;">မင်္ဂလာပါ</h2>
-        <p style="font-size:16px;font-weight:700;color:#ff5000;">SINMA Mall</p>
-        <p style="font-size:11px;color:#666;margin-bottom:12px;">Created by <strong>Kyaw Waiyan Linn</strong></p>
-        <button onclick="document.getElementById('welcomePopup').style.display='none'" class="btn-orange">စတင်ဈေးဝယ်မယ်</button>
+<!-- Welcome Popup -->
+<div id="welcomePopup" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;">
+    <div style="background:linear-gradient(145deg,#111827,#1e293b);border:1px solid #3b82f6;border-radius:24px;padding:32px 24px;text-align:center;max-width:360px;width:90%;box-shadow:0 0 60px rgba(59,130,246,0.2);">
+        <div style="font-size:56px;margin-bottom:12px;">🌊</div>
+        <h2 style="font-size:22px;font-weight:900;color:#f1f5f9;margin-bottom:4px;">မင်္ဂလာပါ</h2>
+        <p style="font-size:16px;font-weight:700;color:#60a5fa;margin-bottom:4px;">SINMA LOGISTICS</p>
+        <p style="font-size:12px;color:#94a3b8;margin-bottom:20px;">Created by <span style="color:#f59e0b;font-weight:700;">Kyaw Waiyan Linn</span></p>
+        <p style="font-size:11px;color:#64748b;margin-bottom:16px;">🇨🇳 China → 🇲🇲 Myanmar Pre-Order Service</p>
+        <button onclick="document.getElementById('welcomePopup').style.display='none'" class="btn-primary">
+            <i class="fa-solid fa-rocket"></i> စတင်မယ်
+        </button>
     </div>
 </div>
 
 <div class="app-container">
+    <!-- Header -->
     <div class="header">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-            <span style="color:white;font-size:18px;font-weight:900;">SINMA Mall</span>
-        </div>
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass" style="color:#999;"></i>
-            <input type="text" id="searchKeyword" placeholder="ပစ္စည်းရှာရန်...">
-            <button onclick="searchProducts()" class="search-btn">ရှာမယ်</button>
-        </div>
-    </div>
-    
-    <div class="categories">
-        <div class="cat-item active" onclick="loadHomeProducts()">🔥 Hot</div>
-        <div class="cat-item" onclick="searchCategory('shoes')">👟 ဖိနပ်</div>
-        <div class="cat-item" onclick="searchCategory('shirt')">👕 အင်္ကျီ</div>
-        <div class="cat-item" onclick="searchCategory('bag')">👜 အိတ်</div>
-        <div class="cat-item" onclick="searchCategory('phone')">📱 ဖုန်း</div>
-        <div class="cat-item" onclick="searchCategory('electronics')">🔌 လျှပ်စစ်</div>
-    </div>
-    
-    <div style="margin:16px 16px 12px;font-size:16px;font-weight:800;">🔥 Hot Products</div>
-    
-    <div id="productGrid" class="product-grid">
-        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#999;">
-            <i class="fa-solid fa-spinner animate-spin" style="font-size:32px;color:#ff5000;display:block;margin-bottom:12px;"></i>
-            Loading...
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-water text-xl" style="color:#93c5fd;"></i>
+                </div>
+                <div>
+                    <div class="logo-text">SINMA</div>
+                    <div class="logo-sub">Logistics</div>
+                </div>
+            </div>
+            <div style="display:flex;gap:8px;">
+                <span class="tag tag-green">V4 API</span>
+                <span class="tag tag-blue">Live</span>
+            </div>
         </div>
     </div>
-    
-    <div class="cart-bar">
-        <div class="cart-icon" onclick="openCart()">
-            <i class="fa-solid fa-basket-shopping"></i>
-            <span class="cart-badge" id="cartBadge">0</span>
+
+    <!-- Main Content -->
+    <div style="padding-top:4px;">
+        
+        <!-- Search Section -->
+        <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <i class="fa-solid fa-magnifying-glass" style="color:#60a5fa;font-size:18px;"></i>
+                <span style="font-weight:700;font-size:14px;color:#f1f5f9;">Search Products</span>
+                <span class="tag tag-amber">By Name</span>
+            </div>
+            <div style="display:flex;gap:8px;">
+                <input type="text" id="searchKeyword" placeholder="ပစ္စည်းနာမည် ရိုက်ထည့်ပါ..." class="input-field" style="flex:1;">
+                <button onclick="searchProducts()" id="searchBtn" class="btn-primary" style="width:auto;padding:14px 18px;">
+                    <span id="searchBtnText"><i class="fa-solid fa-search"></i></span>
+                </button>
+            </div>
+            <p style="font-size:9px;color:#64748b;margin-top:6px;">💡 အင်္ဂလိပ်လို (shoes, bag) သို့ တရုတ်လို (鞋, 包) ရိုက်ရှာပါ</p>
         </div>
-        <div style="flex:1;margin-left:12px;">
-            <span id="cartTotalKs" style="font-weight:800;color:#ff5000;">0 Ks</span>
+
+        <!-- Direct ID Section -->
+        <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <i class="fa-solid fa-link" style="color:#60a5fa;font-size:18px;"></i>
+                <span style="font-weight:700;font-size:14px;color:#f1f5f9;">Direct Sourcing</span>
+                <span class="tag tag-blue">By ID</span>
+            </div>
+            <div style="display:flex;gap:8px;">
+                <input type="text" id="taobaoUrl" placeholder="Item ID သို့ Taobao Link" class="input-field" style="flex:1;">
+                <button onclick="fetchProduct()" id="fetchBtn" class="btn-primary" style="width:auto;padding:14px 18px;">
+                    <span id="fetchText">FETCH</span>
+                </button>
+            </div>
+            <button onclick="viewOnTaobao()" class="btn-secondary" style="width:100%;margin-top:8px;">
+                <i class="fa-solid fa-external-link-alt"></i> View on Taobao
+            </button>
         </div>
-        <button onclick="openCart()" class="btn-orange" style="width:auto;padding:10px 24px;font-size:13px;">ခြင်းတောင်း</button>
+
+        <!-- Status -->
+        <div id="statusBox" style="display:none;margin:0 16px 8px;padding:10px 14px;border-radius:12px;font-size:12px;"></div>
+
+        <!-- Search Results -->
+        <div id="searchResults" style="padding:0 16px;"></div>
+
+        <!-- Product Card -->
+        <div id="productCard" class="card card-accent slide-up" style="display:none;">
+            <div style="display:flex;gap:14px;">
+                <img id="prodImg" src="" style="width:90px;height:90px;object-fit:cover;border-radius:14px;background:#1e293b;border:1px solid #1e3a5f;">
+                <div style="flex:1;min-width:0;">
+                    <h4 id="prodTitle" style="font-size:13px;color:#f1f5f9;line-height:1.4;margin-bottom:6px;"></h4>
+                    <p id="shopName" style="font-size:10px;color:#94a3b8;margin-bottom:8px;"></p>
+                    <div style="display:flex;align-items:baseline;gap:8px;">
+                        <span id="priceKs" style="font-size:22px;font-weight:900;color:#f59e0b;">0 Ks</span>
+                        <span id="priceRmb" style="font-size:12px;color:#94a3b8;">¥0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKU Options -->
+        <div id="skuBlock" class="card" style="display:none;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <i class="fa-solid fa-list-check" style="color:#60a5fa;"></i>
+                <span style="font-weight:700;font-size:13px;color:#f1f5f9;">Select Option</span>
+            </div>
+            <div id="skuOptions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"></div>
+        </div>
+
+        <!-- Price & Spec -->
+        <div class="card">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div>
+                    <label style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Price (RMB)</label>
+                    <input type="number" id="rmbPrice" oninput="calculateTotal()" class="input-field" placeholder="0.00" step="0.01" style="margin-top:4px;">
+                </div>
+                <div>
+                    <label style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Specification</label>
+                    <input type="text" id="specInput" class="input-field" placeholder="အရောင်/ဆိုဒ်" style="margin-top:4px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Total -->
+        <div class="card card-accent">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <div style="font-size:9px;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;font-weight:700;">စုစုပေါင်း (မြန်မာကျပ်)</div>
+                    <div style="font-size:28px;font-weight:900;color:#f59e0b;margin-top:4px;" id="totalDisplay">0 Ks</div>
+                    <div style="font-size:9px;color:#d97706;margin-top:2px;">(RMB × 650) + 5% Service Fee</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:9px;color:#ef4444;font-weight:700;">📦 Cargo</div>
+                    <div style="font-size:10px;color:#fca5a5;">1Kg = 30,000 Ks</div>
+                    <div style="font-size:8px;color:#dc2626;">ရောက်မှသိ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+            <button onclick="addToCart()" class="btn-primary">
+                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+            </button>
+        </div>
+        
+        <!-- Branding -->
+        <div style="text-align:center;padding:8px 16px 20px;">
+            <p style="font-size:9px;color:#475569;">© 2026 SINMA LOGISTICS • Created by Kyaw Waiyan Linn</p>
+        </div>
+    </div>
+
+    <!-- Cart Float Button -->
+    <button class="btn-cart-float" onclick="openCart()">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span id="cartBadge" style="position:absolute;top:-6px;right:-6px;background:#ef4444;color:white;font-size:10px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">0</span>
+    </button>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)closeCart()">
+        <div class="modal-sheet">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <h3 style="font-weight:800;font-size:16px;color:#f1f5f9;">
+                    <i class="fa-solid fa-basket-shopping" style="color:#f59e0b;margin-right:6px;"></i>ခြင်းတောင်း
+                </h3>
+                <button onclick="closeCart()" style="background:none;border:none;color:#94a3b8;font-size:22px;cursor:pointer;">✕</button>
+            </div>
+            <div id="cartItems" style="max-height:300px;overflow-y:auto;margin-bottom:12px;"></div>
+            <div style="border-top:1px solid #1e3a5f;padding-top:12px;margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;color:#f1f5f9;">
+                    <span>စုစုပေါင်း</span>
+                    <span id="cartTotal" style="color:#f59e0b;">0 Ks</span>
+                </div>
+                <p style="font-size:9px;color:#ef4444;margin-top:4px;">📦 ကားခ: 1 Kg = 30,000 Ks (ပစ္စည်းရောက်မှသိ)</p>
+            </div>
+            <input type="tel" id="cartPhone" placeholder="ဖုန်းနံပါတ်ထည့်ပါ" class="input-field" style="margin-bottom:12px;">
+            <button onclick="submitOrder()" class="btn-primary" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+                <i class="fa-solid fa-paper-plane"></i> Order တင်မယ်
+            </button>
+        </div>
     </div>
 </div>
 
@@ -101,131 +373,251 @@ const TOKEN = 'kKIu6qEmpkwi0Uvo';
 const SHEET = 'https://script.google.com/macros/s/AKfycbz3zejT0DgFLpkNMqxAb7nSjs7I3iTxZrHM1r9Y75j0bwyj2xXNY6zXhYct7Pjbe1jW7w/exec';
 const API = 'https://api.justoneapi.com/api/taobao';
 const RATE = 650;
+const SERVICE_FEE = 0.05;
 
-function toKs(y) { return Math.round(y*RATE); }
-function fmtKs(a) { return a.toLocaleString('en-US')+' Ks'; }
-function toast(m) { const t=document.createElement('div'); t.className='toast'; t.innerText=m; document.body.appendChild(t); setTimeout(()=>t.remove(),2000); }
+let currentSkus = [];
 
-// ==================== DIRECT API CALL (NO PROXY) ====================
-async function fetchProductsByKeyword(kw) {
-    const grid = document.getElementById('productGrid');
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;"><i class="fa-solid fa-spinner animate-spin" style="font-size:32px;color:#ff5000;display:block;margin-bottom:12px;"></i>Loading...</div>';
+function extractId(s) {
+    if(!s) return null; s=s.trim();
+    if(/^\d{11,13}$/.test(s)) return s;
+    const m = s.match(/[?&]id=(\d{11,13})/);
+    return m?m[1]:null;
+}
+
+function viewOnTaobao() {
+    const id = extractId(document.getElementById('taobaoUrl').value);
+    if(!id) return toast('⚠️ Item ID မှားနေပါသည်');
+    window.open(`https://item.taobao.com/item.htm?id=${id}`, '_blank');
+}
+
+function toYuan(fen) { return parseFloat(fen) / 100; }
+function toKs(yuan) { return Math.round(yuan * RATE); }
+function fmtKs(amount) { return amount.toLocaleString('en-US') + ' Ks'; }
+function toast(msg) {
+    const t = document.createElement('div'); t.className = 'toast'; t.innerText = msg;
+    document.body.appendChild(t); setTimeout(() => t.remove(), 2500);
+}
+
+// ==================== SEARCH ====================
+async function searchProducts() {
+    const kw = document.getElementById('searchKeyword').value.trim();
+    if(!kw) return toast('⚠️ ပစ္စည်းနာမည်ထည့်ပါ');
     
+    const btn = document.getElementById('searchBtn');
+    btn.disabled = true;
+    document.getElementById('searchBtnText').innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>';
+    
+    const resultsDiv = document.getElementById('searchResults');
+    resultsDiv.innerHTML = '<p style="color:#94a3b8;font-size:12px;text-align:center;padding:20px;">🔍 ရှာဖွေနေပါသည်...</p>';
+
     try {
         const url = `${API}/search/v1?token=${TOKEN}&keyword=${encodeURIComponent(kw)}&page=1&sort=sale&tmall=1`;
-        console.log('Fetching:', url);
-        
         const res = await fetch(url);
-        console.log('Response status:', res.status);
-        
         const data = await res.json();
-        console.log('Response data:', data);
-        
         const items = data?.data?.model?.itemList || [];
         
         if(items.length > 0) {
-            grid.innerHTML = items.slice(0,20).map(item => {
-                const priceYuan = item.priceYuanDouble || item.discntPriceYuan || 0;
-                const priceKs = toKs(priceYuan);
-                return `<div class="product-card" onclick="openProductDetail('${item.itemId}')">
-                    <img src="${item.picUrlFull||''}" onerror="this.src='https://via.placeholder.com/300'">
-                    <div class="info">
-                        <div class="name">${item.itemName||''}</div>
-                        <div class="price">${fmtKs(priceKs)}</div>
-                        <div class="shop">${item.shopName||''}</div>
-                    </div>
-                </div>`;
-            }).join('');
+            resultsDiv.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <span style="font-size:12px;color:#34d399;font-weight:700;">✅ ${items.length} ခုတွေ့ရှိသည်</span>
+                    <span class="tag tag-blue">Search V1</span>
+                </div>
+                ${items.slice(0,20).map(item => {
+                    const priceYuan = item.priceYuanDouble || item.discntPriceYuan || 0;
+                    const priceKs = toKs(priceYuan);
+                    return `
+                    <div class="search-item slide-up" onclick="viewFromSearch('${item.itemId}')">
+                        <img src="${item.picUrlFull||''}" onerror="this.style.display='none'" style="width:55px;height:55px;object-fit:cover;border-radius:10px;border:1px solid #1e3a5f;">
+                        <div style="flex:1;min-width:0;">
+                            <p style="font-size:12px;color:#f1f5f9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px;">${item.itemName||''}</p>
+                            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                <span style="font-size:15px;font-weight:800;color:#f59e0b;">${fmtKs(priceKs)}</span>
+                                <span style="font-size:10px;color:#94a3b8;">¥${priceYuan}</span>
+                            </div>
+                            <p style="font-size:10px;color:#64748b;margin-top:2px;">${item.shopName||''} · ${item.itemLoc||''}</p>
+                        </div>
+                    </div>`;
+                }).join('')}`;
         } else {
-            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">⚠️ ပစ္စည်းမတွေ့ပါ</div>';
+            resultsDiv.innerHTML = '<p style="color:#fca5a5;font-size:12px;text-align:center;padding:20px;">⚠️ ပစ္စည်းမတွေ့ပါ — စာလုံးပေါင်းပြန်စစ်ပါ</p>';
         }
     } catch(e) {
-        console.error('Error:', e);
-        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff5000;">❌ ${e.message}</div>`;
+        resultsDiv.innerHTML = `<p style="color:#fca5a5;font-size:12px;text-align:center;padding:20px;">❌ Error: ${e.message}</p>`;
     }
+    btn.disabled = false;
+    document.getElementById('searchBtnText').innerHTML = '<i class="fa-solid fa-search"></i>';
 }
 
-function loadHomeProducts() { fetchProductsByKeyword('shoes'); }
-function searchCategory(kw) { document.querySelectorAll('.cat-item').forEach(c=>c.classList.remove('active')); event.target.classList.add('active'); fetchProductsByKeyword(kw); }
-function searchProducts() {
-    const kw = document.getElementById('searchKeyword').value.trim();
-    if(!kw) return toast('နာမည်ထည့်ပါ');
-    document.querySelectorAll('.cat-item').forEach(c=>c.classList.remove('active'));
-    fetchProductsByKeyword(kw);
+function viewFromSearch(id) {
+    document.getElementById('taobaoUrl').value = id;
+    document.getElementById('searchResults').scrollIntoView({behavior:'smooth'});
+    fetchProduct();
 }
 
-async function openProductDetail(itemId) {
+// ==================== FETCH PRODUCT ====================
+async function fetchProduct() {
+    const id = extractId(document.getElementById('taobaoUrl').value);
+    if(!id) return toast('⚠️ Item ID မှားနေပါသည်');
+
+    const btn = document.getElementById('fetchBtn');
+    btn.disabled = true;
+    document.getElementById('fetchText').innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>';
+    hideProduct();
+
     try {
-        const res = await fetch(`${API}/get-item-detail/v4?token=${TOKEN}&itemId=${itemId}`);
+        const url = `${API}/get-item-detail/v4?token=${TOKEN}&itemId=${id}`;
+        const res = await fetch(url);
         const data = await res.json();
-        if(data?.data) {
-            const item = data.data;
-            const discountYuan = (parseFloat(item.DiscountPrice)||0)/100;
-            const itemYuan = (parseFloat(item.itemPrice)||0)/100;
-            const displayYuan = discountYuan > 0 ? discountYuan : itemYuan;
-            
-            const cart = JSON.parse(localStorage.getItem('sinma_cart')||'[]');
-            cart.push({ title:item.title, priceYuan:displayYuan, qty:1, spec:'', totalKs:toKs(displayYuan) });
-            localStorage.setItem('sinma_cart',JSON.stringify(cart));
-            updateCartUI();
-            toast('✅ Cart ထဲထည့်ပြီး — ' + fmtKs(toKs(displayYuan)));
+        
+        if(data?.data?.itemId) {
+            displayProduct(data.data);
+            showStatus('success','✅ ပစ္စည်းရှာတွေ့ပါပြီ (V4)');
+            document.getElementById('productCard').scrollIntoView({behavior:'smooth'});
+        } else {
+            showStatus('error','❌ ပစ္စည်းမတွေ့ပါ');
         }
-    } catch(e) { toast('Error'); }
+    } catch(e) {
+        showStatus('error','❌ ' + e.message);
+    }
+    btn.disabled = false;
+    document.getElementById('fetchText').textContent = 'FETCH';
 }
 
-function updateCartUI() {
+function displayProduct(data) {
+    let img = data.images?.[0] || data.itemPic || '';
+    if(img?.startsWith('//')) img = 'https:' + img;
+    document.getElementById('prodImg').src = img || 'https://via.placeholder.com/400/1e293b/60a5fa?text=No+Image';
+    document.getElementById('prodTitle').innerText = data.title || '';
+    document.getElementById('shopName').innerText = '🏪 ' + (data.shopName || '');
+    
+    const discountYuan = toYuan(parseFloat(data.DiscountPrice) || 0);
+    const itemYuan = toYuan(parseFloat(data.itemPrice) || 0);
+    const displayYuan = discountYuan > 0 ? discountYuan : itemYuan;
+    
+    document.getElementById('priceKs').innerText = fmtKs(toKs(displayYuan));
+    document.getElementById('priceRmb').innerText = '¥' + displayYuan.toFixed(2);
+    document.getElementById('rmbPrice').value = displayYuan.toFixed(2);
+    document.getElementById('productCard').style.display = 'block';
+    
+    currentSkus = data.sku2info || [];
+    const container = document.getElementById('skuOptions');
+    container.innerHTML = '';
+    document.getElementById('skuBlock').style.display = 'none';
+    
+    const skuBase = data.skuBase || [];
+    if(skuBase.length > 0 && skuBase[0].itemPropertyValues) {
+        skuBase[0].itemPropertyValues.forEach(opt => {
+            const matched = currentSkus.find(s => s.valueList?.includes(opt.valueId));
+            const skuYuan = toYuan(parseFloat(matched?.finalSkuPrice || matched?.price || data.DiscountPrice || 0));
+            const skuKs = toKs(skuYuan);
+            
+            const btn = document.createElement('div');
+            btn.className = 'sku-btn';
+            btn.innerHTML = `
+                ${opt.pic ? `<img src="${opt.pic}" onerror="this.style.display='none'">` : ''}
+                <span style="font-size:11px;">${opt.value || ''}</span>
+                <span style="font-size:11px;color:#f59e0b;display:block;font-weight:700;margin-top:4px;">${fmtKs(skuKs)}</span>
+                <span style="font-size:9px;color:#94a3b8;">¥${skuYuan.toFixed(2)}</span>
+            `;
+            btn.onclick = () => {
+                container.querySelectorAll('.sku-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                document.getElementById('rmbPrice').value = skuYuan.toFixed(2);
+                document.getElementById('specInput').value = opt.value || '';
+                document.getElementById('priceKs').innerText = fmtKs(skuKs);
+                document.getElementById('priceRmb').innerText = '¥' + skuYuan.toFixed(2);
+                calculateTotal();
+            };
+            container.appendChild(btn);
+        });
+        document.getElementById('skuBlock').style.display = 'block';
+    }
+    
+    calculateTotal();
+}
+
+function showStatus(type, msg) {
+    const box = document.getElementById('statusBox');
+    box.style.display = 'block';
+    box.style.background = type==='error'?'rgba(239,68,68,0.15)':'rgba(16,185,129,0.15)';
+    box.style.color = type==='error'?'#fca5a5':'#6ee7b7';
+    box.style.border = `1px solid ${type==='error'?'rgba(239,68,68,0.3)':'rgba(16,185,129,0.3)'}`;
+    box.innerText = msg;
+}
+
+function hideProduct() {
+    document.getElementById('productCard').style.display = 'none';
+    document.getElementById('skuBlock').style.display = 'none';
+}
+
+function calculateTotal() {
+    const rmb = parseFloat(document.getElementById('rmbPrice').value) || 0;
+    document.getElementById('totalDisplay').innerText = rmb ? fmtKs(Math.round(rmb * RATE * (1 + SERVICE_FEE))) : '0 Ks';
+}
+
+// ==================== CART ====================
+function addToCart() {
+    const link = document.getElementById('taobaoUrl').value.trim();
+    const rmb = document.getElementById('rmbPrice').value;
+    const spec = document.getElementById('specInput').value;
+    if(!rmb || parseFloat(rmb)===0) return toast('⚠️ RMB ဈေးထည့်ပါ');
+    
     const cart = JSON.parse(localStorage.getItem('sinma_cart')||'[]');
-    document.getElementById('cartBadge').innerText = cart.length;
-    document.getElementById('cartTotalKs').innerText = fmtKs(cart.reduce((s,i)=>s+(i.totalKs||toKs(i.priceYuan*i.qty)),0));
+    cart.push({link,rmb,spec,total:document.getElementById('totalDisplay').innerText});
+    localStorage.setItem('sinma_cart',JSON.stringify(cart));
+    updateCartBadge();
+    toast('✅ Cart ထဲထည့်ပြီးပါပြီ');
+}
+
+function updateCartBadge() {
+    document.getElementById('cartBadge').innerText = (JSON.parse(localStorage.getItem('sinma_cart')||'[]')).length;
 }
 
 function openCart() {
     const cart = JSON.parse(localStorage.getItem('sinma_cart')||'[]');
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.style.display = 'flex';
-    modal.onclick = function(e) { if(e.target===modal) modal.remove(); };
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
-                <h3 style="font-weight:800;">🛒 ခြင်းတောင်း</h3>
-                <button onclick="this.closest('.modal').remove()" style="background:none;border:none;font-size:20px;">✕</button>
+    document.getElementById('cartItems').innerHTML = cart.length ? cart.map((item,i) => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+            <div style="flex:1;min-width:0;">
+                <p style="font-size:11px;color:#f1f5f9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.link}</p>
+                <p style="font-size:10px;color:#94a3b8;">${item.spec||'No Spec'} | ¥${item.rmb}</p>
+                <p style="font-size:13px;font-weight:700;color:#f59e0b;">${item.total}</p>
             </div>
-            <div style="max-height:300px;overflow-y:auto;margin-bottom:12px;">
-                ${cart.length ? cart.map((item,i)=>`
-                    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;">
-                        <div><p style="font-size:12px;font-weight:600;">${item.title}</p><p style="font-size:13px;font-weight:700;color:#ff5000;">${fmtKs(item.totalKs||toKs(item.priceYuan*item.qty))}</p></div>
-                        <button onclick="removeCartItem(${i}); this.closest('.modal').remove(); openCart();" style="color:#ff5000;background:none;border:none;">🗑</button>
-                    </div>`).join('') : '<p style="color:#999;text-align:center;padding:20px;">ပစ္စည်းမရှိပါ</p>'}
-            </div>
-            <input type="tel" id="cartPhone" placeholder="ဖုန်းနံပါတ်ထည့်ပါ" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:12px;">
-            <button onclick="submitOrder()" class="btn-orange">Order တင်မယ်</button>
-        </div>`;
-    document.body.appendChild(modal);
+            <button onclick="removeCartItem(${i})" style="color:#ef4444;background:none;border:none;font-size:16px;cursor:pointer;padding:6px;">🗑</button>
+        </div>`).join('') : '<p style="color:#94a3b8;text-align:center;padding:20px;">ပစ္စည်းမရှိသေးပါ</p>';
+    
+    const totalKs = cart.reduce((sum,item) => sum + (parseInt(item.total?.replace(/[^0-9]/g,'')) || 0), 0);
+    document.getElementById('cartTotal').innerText = totalKs.toLocaleString('en-US') + ' Ks';
+    document.getElementById('cartModal').style.display = 'flex';
 }
+
+function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
 
 function removeCartItem(i) {
     const cart = JSON.parse(localStorage.getItem('sinma_cart')||'[]');
     cart.splice(i,1);
     localStorage.setItem('sinma_cart',JSON.stringify(cart));
-    updateCartUI();
+    updateCartBadge();
+    openCart();
 }
 
 async function submitOrder() {
     const cart = JSON.parse(localStorage.getItem('sinma_cart')||'[]');
-    const phone = document.getElementById('cartPhone')?.value?.trim();
-    if(!cart.length) return toast('ပစ္စည်းမရှိ');
-    if(!phone) return toast('ဖုန်းထည့်ပါ');
+    const phone = document.getElementById('cartPhone').value.trim();
+    if(!cart.length) return toast('⚠️ ပစ္စည်းမရှိပါ');
+    if(!phone) return toast('⚠️ ဖုန်းနံပါတ်ထည့်ပါ');
+    
     try {
         await fetch(SHEET, {method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:'SINMA-'+Date.now(),phone,items:cart})});
-        toast('✅ Order တင်ပြီး');
+        toast('✅ Order တင်ပြီးပါပြီ');
         localStorage.removeItem('sinma_cart');
-        updateCartUI();
-        document.querySelectorAll('.modal').forEach(m=>m.remove());
-    } catch(e) { toast('❌ Error'); }
+        updateCartBadge();
+        closeCart();
+    } catch(e) {
+        toast('❌ Order တင်မရပါ');
+    }
 }
 
-document.addEventListener('DOMContentLoaded',()=>{ updateCartUI(); loadHomeProducts(); });
+document.addEventListener('DOMContentLoaded', updateCartBadge);
 </script>
 </body>
 </html>
