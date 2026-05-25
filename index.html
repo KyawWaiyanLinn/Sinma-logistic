@@ -183,34 +183,24 @@ function toast(m) {
 
 // ==================== API CALLS (New Extended) ====================
 async function searchAPI(keyword) {
-    var url = 'https://api.justoneapi.com/api/taobao/search-item-list/v1?token=' + TOKEN 
-              + '&keyword=' + encodeURIComponent(keyword) 
-              + '&page=1'
-              + '&sort=_sale'
-              + '&tmall=1'
-              + '&pageSize=20';
-
-    console.log("Calling Extended API:", url);
-
-    try {
-        var res = await fetch(url);
-        var data = await res.json();
-        console.log("API Response:", data);
-
-        return data?.data?.resultList || 
-               data?.data?.model?.itemList || 
-               data?.data?.items || [];
-    } catch(e) {
-        console.error("Search API Error:", e);
-        return [];
-    }
+   // အစ်ကို့ index.html ထဲက script အပိုင်းကို ဒီအတိုင်း ပြင်ပါ
+async function searchAPI(kw){
+    // Proxy ကို ခံထားပြီး ခေါ်ခြင်း
+    var url = 'https://api.justoneapi.com/api/taobao/search/v1?token='+TOKEN+'&keyword='+encodeURIComponent(kw)+'&page=1&sort=sale&tmall=1';
+    var r = await fetch('https://corsproxy.org/?' + encodeURIComponent(url));
+    var json = await r.json();
+    var d = JSON.parse(json.contents);
+    return d.data.model.itemList || [];
 }
 
-async function detailAPI(itemId) {
-    var url = 'https://api.justoneapi.com/api/taobao/get-item-detail/v4?token=' + TOKEN + '&itemId=' + itemId;
-    var res = await fetch(url);
-    var data = await res.json();
-    return data.data || data;
+async function detailAPI(id){
+    var url = 'https://api.justoneapi.com/api/taobao/get-item-detail/v4?token='+TOKEN+'&itemId='+id;
+    var r = await fetch('https://corsproxy.org/?' + encodeURIComponent(url));
+    var json = await r.json();
+    var d = JSON.parse(json.contents);
+    return d.data || d;
+}
+ || data;
 }
 
 // ==================== LOAD PRODUCTS ====================
