@@ -47,44 +47,44 @@
 
 <div class="app">
     <div class="header">
-        <h1>🛒 SINMA Mall</h1>
+        <h1>ðŸ›’ SINMA Mall</h1>
         <div class="search-box">
-            <input type="text" id="searchKeyword" placeholder="ပစ္စည်းရှာရန်...">
-            <button onclick="searchProducts()">🔍</button>
-            <button onclick="startImageSearch()" style="background:#fff;color:#ff5000;border:1px solid #ff5000;">📸</button>
+            <input type="text" id="searchKeyword" placeholder="á€•á€…á€¹á€…á€Šá€ºá€¸á€›á€¾á€¬á€›á€”á€º...">
+            <button onclick="searchProducts()">ðŸ”</button>
+            <button onclick="startImageSearch()" style="background:#fff;color:#ff5000;border:1px solid #ff5000;">ðŸ“¸</button>
         </div>
     </div>
 
     <div class="flash-sale" onclick="loadProducts('shoes')">
-        <h2>🔥 FLASH SALE - ယနေ့ဈေးကျ</h2>
-        <p>အချိန်ကန့်သတ်ပစ္စည်းများ - အမြန်ဝယ်ပါ!</p>
+        <h2>ðŸ”¥ FLASH SALE - á€šá€”á€±á€·á€ˆá€±á€¸á€€á€»</h2>
+        <p>á€¡á€á€»á€­á€”á€ºá€€á€”á€·á€ºá€žá€á€ºá€•á€…á€¹á€…á€Šá€ºá€¸á€™á€»á€¬á€¸ - á€¡á€™á€¼á€”á€ºá€á€šá€ºá€•á€«!</p>
     </div>
 
     <div class="slider-container">
         <div class="slides" id="slides">
-            <div class="slide" style="background-image:url('https://picsum.photos/id/1015/800/400')"><div class="slide-content"><h2>Hot Deals 🔥</h2><p>ယနေ့ဈေးကျပစ္စည်းများ</p></div></div>
-            <div class="slide" style="background-image:url('https://picsum.photos/id/201/800/400')"><div class="slide-content"><h2>ဖုန်းနဲ့ Gadget</h2><p>အကောင်းဆုံး ဈေးနှုန်း</p></div></div>
-            <div class="slide" style="background-image:url('https://picsum.photos/id/237/800/400')"><div class="slide-content"><h2>ဖိနပ် & အိတ်များ</h2><p>အရည်အသွေး မြင့်မား</p></div></div>
+            <div class="slide" style="background-image:url('https://picsum.photos/id/1015/800/400')"><div class="slide-content"><h2>Hot Deals ðŸ”¥</h2><p>á€šá€”á€±á€·á€ˆá€±á€¸á€€á€»á€•á€…á€¹á€…á€Šá€ºá€¸á€™á€»á€¬á€¸</p></div></div>
+            <div class="slide" style="background-image:url('https://picsum.photos/id/201/800/400')"><div class="slide-content"><h2>á€–á€¯á€”á€ºá€¸á€”á€²á€· Gadget</h2><p>á€¡á€€á€±á€¬á€„á€ºá€¸á€†á€¯á€¶á€¸ á€ˆá€±á€¸á€”á€¾á€¯á€”á€ºá€¸</p></div></div>
+            <div class="slide" style="background-image:url('https://picsum.photos/id/237/800/400')"><div class="slide-content"><h2>á€–á€­á€”á€•á€º & á€¡á€­á€á€ºá€™á€»á€¬á€¸</h2><p>á€¡á€›á€Šá€ºá€¡á€žá€½á€±á€¸ á€™á€¼á€„á€·á€ºá€™á€¬á€¸</p></div></div>
         </div>
         <div class="dots" id="dots"></div>
     </div>
 
     <div class="categories">
-        <span class="active" onclick="loadProducts('shoes')">🔥 Hot</span>
-        <span onclick="loadProducts('shoes')">👟 ဖိနပ်</span>
-        <span onclick="loadProducts('shirt')">👕 အင်္ကျီ</span>
-        <span onclick="loadProducts('bag')">👜 အိတ်</span>
-        <span onclick="loadProducts('phone')">📱 ဖုန်း</span>
-        <span onclick="loadProducts('electronics')">🔌 လျှပ်စစ်</span>
+        <span class="active" onclick="loadProducts('shoes')">ðŸ”¥ Hot</span>
+        <span onclick="loadProducts('shoes')">ðŸ‘Ÿ á€–á€­á€”á€•á€º</span>
+        <span onclick="loadProducts('shirt')">ðŸ‘• á€¡á€„á€ºá€¹á€€á€»á€®</span>
+        <span onclick="loadProducts('bag')">ðŸ‘œ á€¡á€­á€á€º</span>
+        <span onclick="loadProducts('phone')">ðŸ“± á€–á€¯á€”á€ºá€¸</span>
+        <span onclick="loadProducts('electronics')">ðŸ”Œ á€œá€»á€¾á€•á€ºá€…á€…á€º</span>
     </div>
     
-    <div style="margin:16px;font-size:16px;font-weight:800;">🔥 လူကြိုက်များဆုံး</div>
+    <div style="margin:16px;font-size:16px;font-weight:800;">ðŸ”¥ á€œá€°á€€á€¼á€­á€¯á€€á€ºá€™á€»á€¬á€¸á€†á€¯á€¶á€¸</div>
     <div id="productGrid" class="product-grid"></div>
     
     <div class="cart-bar">
-        <span>🛒 <b id="cartBadge">0</b></span>
+        <span>ðŸ›’ <b id="cartBadge">0</b></span>
         <span style="font-weight:800;color:#ff5000;" id="cartTotal">0 Ks</span>
-        <button class="cart-btn" onclick="openCart()">ခြင်းတောင်း</button>
+        <button class="cart-btn" onclick="openCart()">á€á€¼á€„á€ºá€¸á€á€±á€¬á€„á€ºá€¸</button>
     </div>
 </div>
 
@@ -121,15 +121,15 @@ function showRegistrationModal() {
     modal.id = 'regModal';
     modal.innerHTML = '<div class="modal-content">' +
         '<div style="text-align:center;margin-bottom:20px;">' +
-            '<div style="font-size:50px;">👋</div>' +
-            '<h3 style="margin:8px 0;">မင်္ဂလာပါ</h3>' +
-            '<p style="color:#999;font-size:13px;">SINMA Mall မှ ကြိုဆိုပါတယ်</p>' +
+            '<div style="font-size:50px;">ðŸ‘‹</div>' +
+            '<h3 style="margin:8px 0;">á€™á€„á€ºá€¹á€‚á€œá€¬á€•á€«</h3>' +
+            '<p style="color:#999;font-size:13px;">SINMA Mall á€™á€¾ á€€á€¼á€­á€¯á€†á€­á€¯á€•á€«á€á€šá€º</p>' +
         '</div>' +
-        '<label style="font-size:12px;color:#666;font-weight:600;">နာမည်</label>' +
-        '<input type="text" id="regName" placeholder="သင့်နာမည် ထည့်ပါ" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin:6px 0 14px 0;font-size:14px;">' +
-        '<label style="font-size:12px;color:#666;font-weight:600;">ဖုန်းနံပါတ်</label>' +
+        '<label style="font-size:12px;color:#666;font-weight:600;">á€”á€¬á€™á€Šá€º</label>' +
+        '<input type="text" id="regName" placeholder="á€žá€„á€·á€ºá€”á€¬á€™á€Šá€º á€‘á€Šá€·á€ºá€•á€«" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin:6px 0 14px 0;font-size:14px;">' +
+        '<label style="font-size:12px;color:#666;font-weight:600;">á€–á€¯á€”á€ºá€¸á€”á€¶á€•á€«á€á€º</label>' +
         '<input type="tel" id="regPhone" placeholder="09xxxxxxxxx" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin:6px 0 20px 0;font-size:14px;">' +
-        '<button onclick="saveRegistration()" class="btn-orange">စတင်ဈေးဝယ်မယ်</button>' +
+        '<button onclick="saveRegistration()" class="btn-orange">á€…á€á€„á€ºá€ˆá€±á€¸á€á€šá€ºá€™á€šá€º</button>' +
     '</div>';
     document.body.appendChild(modal);
 }
@@ -137,12 +137,12 @@ function showRegistrationModal() {
 function saveRegistration() {
     var name = document.getElementById('regName').value.trim();
     var phone = document.getElementById('regPhone').value.trim();
-    if (!name) return toast('နာမည်ထည့်ပါ');
-    if (!phone) return toast('ဖုန်းနံပါတ်ထည့်ပါ');
-    if (phone.length < 9) return toast('ဖုန်းနံပါတ် မှန်အောင်ထည့်ပါ');
+    if (!name) return toast('á€”á€¬á€™á€Šá€ºá€‘á€Šá€·á€ºá€•á€«');
+    if (!phone) return toast('á€–á€¯á€”á€ºá€¸á€”á€¶á€•á€«á€á€ºá€‘á€Šá€·á€ºá€•á€«');
+    if (phone.length < 9) return toast('á€–á€¯á€”á€ºá€¸á€”á€¶á€•á€«á€á€º á€™á€¾á€”á€ºá€¡á€±á€¬á€„á€ºá€‘á€Šá€·á€ºá€•á€«');
     saveUser(name, phone);
     document.getElementById('regModal').remove();
-    toast('✅ ကြိုဆိုပါတယ် ' + name + '!');
+    toast('âœ… á€€á€¼á€­á€¯á€†á€­á€¯á€•á€«á€á€šá€º ' + name + '!');
 }
 
 // ==================== BANNER SLIDER ====================
@@ -183,30 +183,40 @@ function toast(m) {
 
 // ==================== API CALLS (New Extended) ====================
 async function searchAPI(keyword) {
-   // အစ်ကို့ index.html ထဲက script အပိုင်းကို ဒီအတိုင်း ပြင်ပါ
-async function searchAPI(kw){
-    // Proxy ကို ခံထားပြီး ခေါ်ခြင်း
-    var url = 'https://api.justoneapi.com/api/taobao/search/v1?token='+TOKEN+'&keyword='+encodeURIComponent(kw)+'&page=1&sort=sale&tmall=1';
-    var r = await fetch('https://corsproxy.org/?' + encodeURIComponent(url));
-    var json = await r.json();
-    var d = JSON.parse(json.contents);
-    return d.data.model.itemList || [];
+    var url = 'https://api.justoneapi.com/api/taobao/search-item-list/v1?token=' + TOKEN 
+              + '&keyword=' + encodeURIComponent(keyword) 
+              + '&page=1'
+              + '&sort=_sale'
+              + '&tmall=1'
+              + '&pageSize=20';
+
+    console.log("Calling Extended API:", url);
+
+    try {
+        var res = await fetch(url);
+        var data = await res.json();
+        console.log("API Response:", data);
+
+        return data?.data?.resultList || 
+               data?.data?.model?.itemList || 
+               data?.data?.items || [];
+    } catch(e) {
+        console.error("Search API Error:", e);
+        return [];
+    }
 }
 
-async function detailAPI(id){
-    var url = 'https://api.justoneapi.com/api/taobao/get-item-detail/v4?token='+TOKEN+'&itemId='+id;
-    var r = await fetch('https://corsproxy.org/?' + encodeURIComponent(url));
-    var json = await r.json();
-    var d = JSON.parse(json.contents);
-    return d.data || d;
-}
- || data;
+async function detailAPI(itemId) {
+    var url = 'https://api.justoneapi.com/api/taobao/get-item-detail/v4?token=' + TOKEN + '&itemId=' + itemId;
+    var res = await fetch(url);
+    var data = await res.json();
+    return data.data || data;
 }
 
 // ==================== LOAD PRODUCTS ====================
 async function loadProducts(kw) {
     var grid = document.getElementById('productGrid');
-    grid.innerHTML = '<div class="loading-container"><span class="spinner">🌀</span><br><br><strong>ပစ္စည်းများ ရှာနေပါတယ်...</strong></div>';
+    grid.innerHTML = '<div class="loading-container"><span class="spinner">ðŸŒ€</span><br><br><strong>á€•á€…á€¹á€…á€Šá€ºá€¸á€™á€»á€¬á€¸ á€›á€¾á€¬á€”á€±á€•á€«á€á€šá€º...</strong></div>';
 
     try {
         var items = await searchAPI(kw);
@@ -233,33 +243,33 @@ async function loadProducts(kw) {
             }).join('');
         } else {
             grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:80px;color:#ff5000;">
-                ⚠️ ပစ္စည်း မတွေ့ရပါ<br><small>Keyword: "${kw}"</small>
+                âš ï¸ á€•á€…á€¹á€…á€Šá€ºá€¸ á€™á€á€½á€±á€·á€›á€•á€«<br><small>Keyword: "${kw}"</small>
             </div>`;
         }
     } catch(e) {
         console.error(e);
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff5000;">❌ ချိတ်ဆက်မှု ပြဿနာ</div>';
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff5000;">âŒ á€á€»á€­á€á€ºá€†á€€á€ºá€™á€¾á€¯ á€•á€¼á€¿á€”á€¬</div>';
     }
 }
 
 function searchProducts() {
     var kw = document.getElementById('searchKeyword').value.trim();
-    if (!kw) return toast('နာမည်ထည့်ပါ');
+    if (!kw) return toast('á€”á€¬á€™á€Šá€ºá€‘á€Šá€·á€ºá€•á€«');
     loadProducts(kw);
 }
 
 // ==================== ADD TO CART ====================
 async function addToCartFromSearch(itemId) {
-    if (!itemId) return toast('❌ ပစ္စည်း ID မရှိပါ');
+    if (!itemId) return toast('âŒ á€•á€…á€¹á€…á€Šá€ºá€¸ ID á€™á€›á€¾á€­á€•á€«');
     try {
         var detail = await detailAPI(itemId);
-        if (!detail) return toast('❌ အသေးစိတ် မရရှိပါ');
+        if (!detail) return toast('âŒ á€¡á€žá€±á€¸á€…á€­á€á€º á€™á€›á€›á€¾á€­á€•á€«');
         
         var discountYuan = (parseFloat(detail.DiscountPrice) || 0) / 100;
         var itemYuan = (parseFloat(detail.itemPrice) || 0) / 100;
         var priceYuan = discountYuan > 0 ? discountYuan : itemYuan;
         
-        if (priceYuan <= 0) return toast('❌ ဈေးနှုန်း မရှိပါ');
+        if (priceYuan <= 0) return toast('âŒ á€ˆá€±á€¸á€”á€¾á€¯á€”á€ºá€¸ á€™á€›á€¾á€­á€•á€«');
         
         var cart = JSON.parse(localStorage.getItem('sc') || '[]');
         cart.push({
@@ -271,9 +281,9 @@ async function addToCartFromSearch(itemId) {
         });
         localStorage.setItem('sc', JSON.stringify(cart));
         updateCartUI();
-        toast('✅ Cart ထဲထည့်ပြီး');
+        toast('âœ… Cart á€‘á€²á€‘á€Šá€·á€ºá€•á€¼á€®á€¸');
     } catch(e) {
-        toast('❌ ပြဿနာ ရှိနေပါတယ်');
+        toast('âŒ á€•á€¼á€¿á€”á€¬ á€›á€¾á€­á€”á€±á€•á€«á€á€šá€º');
     }
 }
 
@@ -286,8 +296,8 @@ function updateCartUI() {
 }
 
 function openCart() {
-    // မူရင်ကုဒ်အတိုင်း (အပြည့်အစုံ လိုရင် ပြောပါ)
-    alert("Cart ဖွင့်ထားပါတယ်");
+    // á€™á€°á€›á€„á€ºá€€á€¯á€’á€ºá€¡á€á€­á€¯á€„á€ºá€¸ (á€¡á€•á€¼á€Šá€·á€ºá€¡á€…á€¯á€¶ á€œá€­á€¯á€›á€„á€º á€•á€¼á€±á€¬á€•á€«)
+    alert("Cart á€–á€½á€„á€·á€ºá€‘á€¬á€¸á€•á€«á€á€šá€º");
 }
 
 // ==================== INIT ====================
