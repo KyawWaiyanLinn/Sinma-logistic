@@ -146,7 +146,6 @@ async function submitOrder(){
     await fetch(SHEET,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:'SINMA-'+Date.now(),phone:phone,items:c})});
     toast('✅ Order Submitted!');localStorage.removeItem('sc');updateCartUI();document.querySelectorAll('.modal').forEach(function(m){m.remove()});
 }
-
 document.addEventListener('DOMContentLoaded',function(){createDots();setInterval(nextSlide,4000);updateCartUI();loadProducts('shoes')});
 </script>
 </body>
