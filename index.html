@@ -1,401 +1,153 @@
 <!DOCTYPE html>
 <html lang="my">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SINMA Mall</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box
-    }
-
-    body {
-      background: #f5f5f5;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-      color: #333
-    }
-
-    .app {
-      max-width: 500px;
-      width: 100%;
-      min-height: 100vh;
-      background: #f5f5f5;
-      padding-bottom: 70px
-    }
-
-    .header {
-      background: linear-gradient(135deg, #ff5000, #ff6a00);
-      padding: 12px 16px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      box-shadow: 0 4px 15px rgba(255, 80, 0, 0.3)
-    }
-
-    .header h1 {
-      color: white;
-      font-size: 18px
-    }
-
-    .search-box {
-      background: white;
-      border-radius: 25px;
-      padding: 8px 16px;
-      margin-top: 8px;
-      display: flex;
-      gap: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1)
-    }
-
-    .search-box input {
-      border: none;
-      outline: none;
-      flex: 1;
-      font-size: 14px
-    }
-
-    .search-box button {
-      background: linear-gradient(135deg, #ff5000, #ff6a00);
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 20px;
-      font-weight: 700;
-      cursor: pointer
-    }
-
-    .categories {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 12px 16px
-    }
-
-    .categories span {
-      background: white;
-      padding: 10px 16px;
-      border-radius: 20px;
-      white-space: nowrap;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08)
-    }
-
-    .categories span.active {
-      background: #ff5000;
-      color: white
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 0 16px
-    }
-
-    .product-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      cursor: pointer
-    }
-
-    .product-card:active {
-      transform: scale(0.97)
-    }
-
-    .product-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: #f8f9fa
-    }
-
-    .product-card .info {
-      padding: 10px
-    }
-
-    .product-card .name {
-      font-size: 12px;
-      line-height: 1.4;
-      height: 34px;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      margin-bottom: 6px
-    }
-
-    .product-card .price {
-      font-size: 16px;
-      font-weight: 800;
-      color: #ff5000
-    }
-
-    .product-card .shop {
-      font-size: 10px;
-      color: #999
-    }
-
-    .cart-bar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 500px;
-      width: 100%;
-      background: white;
-      border-top: 1px solid #eee;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 50;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05)
-    }
-
-    .cart-btn {
-      background: linear-gradient(135deg, #ff5000, #ff6a00);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 20px;
-      font-weight: 700;
-      cursor: pointer
-    }
-
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 100;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center
-    }
-
-    .modal-content {
-      background: white;
-      border-radius: 20px 20px 0 0;
-      padding: 20px;
-      max-width: 500px;
-      width: 100%;
-      max-height: 70vh;
-      overflow-y: auto
-    }
-
-    .btn-orange {
-      background: linear-gradient(135deg, #ff5000, #ff6a00);
-      color: white;
-      font-weight: 700;
-      border: none;
-      border-radius: 20px;
-      padding: 14px;
-      font-size: 15px;
-      cursor: pointer;
-      width: 100%
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #333;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-size: 13px;
-      z-index: 200
-    }
-
-    @keyframes spin {
-      from {
-        transform: rotate(0deg)
-      }
-
-      to {
-        transform: rotate(360deg)
-      }
-    }
-
-    .spinner {
-      display: inline-block;
-      animation: spin 1s linear infinite
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SINMA Mall</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;justify-content:center;min-height:100vh;color:#333}
+        .app{max-width:500px;width:100%;min-height:100vh;background:#f5f5f5;padding-bottom:70px}
+        .header{background:linear-gradient(135deg,#ff5000,#ff6a00);padding:12px 16px;position:sticky;top:0;z-index:50;box-shadow:0 4px 15px rgba(255,80,0,0.3)}
+        .header h1{color:white;font-size:18px}
+        .search-box{background:white;border-radius:25px;padding:8px 16px;margin-top:8px;display:flex;gap:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+        .search-box input{border:none;outline:none;flex:1;font-size:14px}
+        .search-box button{background:linear-gradient(135deg,#ff5000,#ff6a00);color:white;border:none;padding:10px 18px;border-radius:20px;font-weight:700;cursor:pointer}
+        .flash-sale{background:linear-gradient(90deg,#ff5000,#ff8a00,#ff5000);background-size:200% 100%;animation:flashBg 2s ease infinite;color:white;padding:14px 16px;margin:12px 16px;border-radius:16px;text-align:center;cursor:pointer}
+        @keyframes flashBg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        .slider-container{position:relative;margin:12px 16px;border-radius:16px;overflow:hidden;height:160px;background:#000}
+        .slides{display:flex;transition:transform 0.5s ease;width:300%;height:100%}
+        .slide{min-width:100%;height:100%;background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:20px;color:white;position:relative}
+        .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.7))}
+        .slide-content{position:relative;z-index:2}
+        .dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+        .dot{width:8px;height:8px;background:rgba(255,255,255,0.5);border-radius:50%;cursor:pointer}
+        .dot.active{background:white;transform:scale(1.3)}
+        .categories{display:flex;gap:8px;overflow-x:auto;padding:12px 16px}
+        .categories span{background:white;padding:10px 16px;border-radius:20px;white-space:nowrap;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        .categories span.active{background:#ff5000;color:white}
+        .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px}
+        .product-card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);cursor:pointer}
+        .product-card:active{transform:scale(0.97)}
+        .product-card img{width:100%;height:200px;object-fit:cover;background:#f8f9fa}
+        .product-card .info{padding:10px}
+        .product-card .name{font-size:12px;line-height:1.4;height:34px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:6px}
+        .product-card .price{font-size:16px;font-weight:800;color:#ff5000}
+        .product-card .shop{font-size:10px;color:#999}
+        .process-bar{display:flex;justify-content:space-around;padding:16px;margin:12px 16px;background:white;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        .process-step{text-align:center;font-size:11px;color:#999;position:relative;flex:1}
+        .process-step .icon{font-size:24px;margin-bottom:4px}
+        .process-step.active{color:#ff5000}
+        .cart-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:500px;width:100%;background:white;border-top:1px solid #eee;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;z-index:50;box-shadow:0 -2px 10px rgba(0,0,0,0.05)}
+        .cart-btn{background:linear-gradient(135deg,#ff5000,#ff6a00);color:white;border:none;padding:12px 24px;border-radius:20px;font-weight:700;cursor:pointer}
+        .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:100;display:flex;align-items:flex-end;justify-content:center}
+        .modal-content{background:white;border-radius:20px 20px 0 0;padding:20px;max-width:500px;width:100%;max-height:70vh;overflow-y:auto}
+        .btn-orange{background:linear-gradient(135deg,#ff5000,#ff6a00);color:white;font-weight:700;border:none;border-radius:20px;padding:14px;font-size:15px;cursor:pointer;width:100%}
+        .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:10px 20px;border-radius:20px;font-size:13px;z-index:200}
+        @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        .spinner{display:inline-block;animation:spin 1s linear infinite}
+    </style>
 </head>
-
 <body>
 
-  <div class="app">
-    <div class="header">
-      <h1>🛒 SINMA Mall</h1>
-      <div class="search-box"><input type="text" id="searchKeyword" placeholder="🔍 Search..."><button onclick="searchProducts()">Search</button></div>
+<div class="app">
+    <div class="header"><h1>🛒 SINMA Mall</h1><div class="search-box"><input type="text" id="searchKeyword" placeholder="🔍 Search..."><button onclick="searchProducts()">Search</button></div></div>
+    <div class="flash-sale" onclick="loadProducts('shoes')"><h2>⚡ FLASH SALE</h2><p style="font-size:12px;">Limited Time Deals!</p></div>
+    
+    <div class="slider-container">
+        <div class="slides" id="slides">
+            <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&h=400&fit=crop')"><div class="slide-content"><h2>🔥 Hot Deals</h2></div></div>
+            <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=800&h=400&fit=crop')"><div class="slide-content"><h2>📱 Gadgets</h2></div></div>
+            <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=400&fit=crop')"><div class="slide-content"><h2>👟 Shoes & Bags</h2></div></div>
+        </div>
+        <div class="dots" id="dots"></div>
     </div>
+
+    <div class="process-bar">
+        <div class="process-step active"><div class="icon">🔍</div>Search</div>
+        <div class="process-step"><div class="icon">🛒</div>Cart</div>
+        <div class="process-step"><div class="icon">📦</div>Order</div>
+        <div class="process-step"><div class="icon">✈️</div>Ship</div>
+    </div>
+
     <div class="categories"><span class="active" onclick="loadProducts('shoes')">🔥 Hot</span><span onclick="loadProducts('shoes')">👟 Shoes</span><span onclick="loadProducts('shirt')">👕 Shirts</span><span onclick="loadProducts('bag')">👜 Bags</span><span onclick="loadProducts('phone')">📱 Phones</span></div>
-    <div style="margin:16px;font-size:16px;font-weight:800;">Products</div>
+    <div style="margin:16px;font-size:16px;font-weight:800;">Popular Products</div>
     <div id="productGrid" class="product-grid"></div>
     <div class="cart-bar"><span>🛒 <b id="cartBadge">0</b></span><span style="font-weight:800;color:#ff5000;" id="cartTotal">0 Ks</span><button class="cart-btn" onclick="openCart()">Cart</button></div>
-  </div>
+</div>
 
-  <script>
-    var TOKEN = 'NR7V2CeJQu2KsiHB';
-    var SHEET = 'https://script.google.com/macros/s/AKfycbz3zejT0DgFLpkNMqxAb7nSjs7I3iTxZrHM1r9Y75j0bwyj2xXNY6zXhYct7Pjbe1jW7w/exec';
-    var RATE = 650;
+<script>
+var TOKEN='NR7V2CeJQu2KsiHB';
+var SHEET='https://script.google.com/macros/s/AKfycbz3zejT0DgFLpkNMqxAb7nSjs7I3iTxZrHM1r9Y75j0bwyj2xXNY6zXhYct7Pjbe1jW7w/exec';
+var RATE=650;
 
-    function toKs(y) {
-      return Math.round(y * RATE)
-    }
+function toKs(y){return Math.round(y*RATE)}
+function fmtKs(a){return a.toLocaleString('en-US')+' Ks'}
+function toast(m){var t=document.createElement('div');t.className='toast';t.innerText=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2000)}
 
-    function fmtKs(a) {
-      return a.toLocaleString('en-US') + ' Ks'
-    }
+var cs=0;
+function createDots(){var c=document.getElementById('dots');for(var i=0;i<3;i++){var d=document.createElement('div');d.className='dot';d.onclick=(function(n){return function(){goToSlide(n)}})(i);c.appendChild(d)}}
+function goToSlide(n){cs=n;document.getElementById('slides').style.transform='translateX(-'+(n*100)+'%)';var ds=document.querySelectorAll('.dot');for(var i=0;i<ds.length;i++)ds[i].classList.toggle('active',i===n)}
+function nextSlide(){cs=(cs+1)%3;goToSlide(cs)}
 
-    function toast(m) {
-      var t = document.createElement('div');
-      t.className = 'toast';
-      t.innerText = m;
-      document.body.appendChild(t);
-      setTimeout(function() {
-        t.remove()
-      }, 2000)
-    }
-    async function searchAPI(kw) {
-      var url = 'https://api.justoneapi.com/api/taobao/search-item-list/v1?token=' + TOKEN + '&keyword=' + encodeURIComponent(kw);
-      var r = await fetch(url);
-      var d = await r.json();
-      return d?.data?.resultList || d?.data?.model?.itemList || d?.data?.itemList || [];
-    }
-    async function detailAPI(id) {
-      var url = 'https://api.justoneapi.com/api/taobao/get-item-detail/v4?token=' + TOKEN + '&itemId=' + id;
-      var r = await fetch(url);
-      var d = await r.json();
-      return d?.data || null;
-    }
-    async function loadProducts(kw) {
-      var g = document.getElementById('productGrid');
-      g.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:80px;"><span class="spinner" style="font-size:42px;color:#ff5000;">🌀</span><br>Loading...</div>';
-      try {
-        var items = await searchAPI(kw);
-        if (items && items.length > 0) {
-          g.innerHTML = items.slice(0, 20).map(function(item) {
-            var p = item.priceYuanDouble || item.discntPriceYuan || 0;
-            // ✅ IMAGE: picUrlFull has full URL
-            var img = item.picUrlFull || item.picUrl || '';
-            if (img && img.includes('alicdn.com')) img = img.split('?')[0] + '_q90x300.jpg';
-            if (!img) img = 'https://via.placeholder.com/300';
-            return '<div class="product-card" onclick="addToCart(\'' + item.itemId + '\')"><img src="' + img + '" onerror="this.src=\'https://via.placeholder.com/300\'"><div class="info"><div class="name">' + (item.itemName || '') + '</div><div class="price">' + fmtKs(toKs(p)) + '</div><div class="shop">' + (item.shopName || '') + '</div></div></div>';
-          }).join('');
-        } else {
-          g.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:80px;">No products found</div>'
-        }
-      } catch (e) {
-        g.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;">Error</div>'
-      }
-    }
+async function searchAPI(kw){
+    var url='https://api.justoneapi.com/api/taobao/search-item-list/v1?token='+TOKEN+'&keyword='+encodeURIComponent(kw);
+    var r=await fetch(url);var d=await r.json();
+    return d?.data?.resultList||d?.data?.model?.itemList||d?.data?.itemList||[];
+}
+async function detailAPI(id){
+    var url='https://api.justoneapi.com/api/taobao/get-item-detail/v4?token='+TOKEN+'&itemId='+id;
+    var r=await fetch(url);var d=await r.json();
+    return d?.data||null;
+}
 
-    function searchProducts() {
-      var kw = document.getElementById('searchKeyword').value.trim();
-      if (!kw) return toast('Enter keyword');
-      loadProducts(kw)
-    }
-    async function addToCart(id) {
-      try {
-        var d = await detailAPI(id);
-        var yuan = 0,
-          title = 'Product';
-        if (d) {
-          yuan = (parseFloat(d.DiscountPrice) || 0) / 100;
-          var iYuan = (parseFloat(d.itemPrice) || 0) / 100;
-          if (yuan <= 0) yuan = iYuan;
-          title = d.title || 'Product'
-        }
-        var c = JSON.parse(localStorage.getItem('sc') || '[]');
-        c.push({
-          id: id,
-          title: title,
-          priceYuan: yuan,
-          qty: 1,
-          totalKs: toKs(yuan)
-        });
-        localStorage.setItem('sc', JSON.stringify(c));
-        updateCartUI();
-        toast('✅ Added - ' + fmtKs(toKs(yuan)));
-      } catch (e) {
-        toast('Error')
-      }
-    }
+async function loadProducts(kw){
+    var g=document.getElementById('productGrid');
+    g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:80px;"><span class="spinner" style="font-size:42px;color:#ff5000;">🌀</span><br>Loading...</div>';
+    try{
+        var items=await searchAPI(kw);
+        if(items&&items.length>0){
+            g.innerHTML=items.slice(0,20).map(function(item){
+                var p=item.priceYuanDouble||item.discntPriceYuan||0;
+                
+                // IMAGE FIX - All possible fields
+                var img=item.picUrlFull||item.picUrl||item.pic_url||item.itemImageURL||item.imageUrl||item.image||'';
+                if(img&&!img.startsWith('http')&&!img.startsWith('//'))img='https://g.search.alicdn.com/img/bao/uploaded/i4/'+img;
+                if(img&&img.startsWith('//'))img='https:'+img;
+                if(img&&img.includes('alicdn.com'))img=img.split('?')[0]+'_q90x300.jpg';
+                if(!img)img='https://via.placeholder.com/300';
+                
+                return '<div class="product-card" onclick="addToCart(\''+item.itemId+'\')"><img src="'+img+'" onerror="this.src=\'https://via.placeholder.com/300\'"><div class="info"><div class="name">'+(item.itemName||'')+'</div><div class="price">'+fmtKs(toKs(p))+'</div><div class="shop">'+(item.shopName||'')+'</div></div></div>';
+            }).join('');
+        }else{g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:80px;">No products found</div>'}
+    }catch(e){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;">Error</div>'}
+}
+function searchProducts(){var kw=document.getElementById('searchKeyword').value.trim();if(!kw)return toast('Enter keyword');loadProducts(kw)}
 
-    function updateCartUI() {
-      var c = JSON.parse(localStorage.getItem('sc') || '[]');
-      document.getElementById('cartBadge').innerText = c.length;
-      document.getElementById('cartTotal').innerText = fmtKs(c.reduce(function(s, i) {
-        return s + i.totalKs
-      }, 0))
-    }
+async function addToCart(id){
+    try{
+        var d=await detailAPI(id);
+        var yuan=0,title='Product';
+        if(d){yuan=(parseFloat(d.DiscountPrice)||0)/100;var iYuan=(parseFloat(d.itemPrice)||0)/100;if(yuan<=0)yuan=iYuan;title=d.title||'Product'}
+        var c=JSON.parse(localStorage.getItem('sc')||'[]');c.push({id:id,title:title,priceYuan:yuan,qty:1,totalKs:toKs(yuan)});
+        localStorage.setItem('sc',JSON.stringify(c));updateCartUI();toast('✅ Added - '+fmtKs(toKs(yuan)));
+    }catch(e){toast('Error')}
+}
+function updateCartUI(){var c=JSON.parse(localStorage.getItem('sc')||'[]');document.getElementById('cartBadge').innerText=c.length;document.getElementById('cartTotal').innerText=fmtKs(c.reduce(function(s,i){return s+i.totalKs},0))}
+function openCart(){
+    var c=JSON.parse(localStorage.getItem('sc')||'[]');var m=document.createElement('div');m.className='modal';m.style.display='flex';
+    m.innerHTML='<div class="modal-content"><div style="display:flex;justify-content:space-between;"><h3>🛒 Cart ('+c.length+')</h3><button onclick="this.closest(\'.modal\').remove()">✕</button></div><div style="max-height:300px;overflow-y:auto;">'+(c.length?c.map(function(item,i){return '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;"><div><p>'+item.title+'</p><p style="color:#ff5000;">'+fmtKs(item.totalKs)+'</p></div><button onclick="removeItem('+i+');this.closest(\'.modal\').remove();openCart()">🗑</button></div>'}).join(''):'<p style="text-align:center;padding:40px;">Empty</p>')+'</div><p style="font-size:10px;color:#ff5000;">📦 Shipping: 1Kg = 30,000 Ks</p><input type="tel" id="cartPhone" placeholder="Phone" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin:12px 0;"><button onclick="submitOrder()" class="btn-orange">📤 Submit Order</button></div>';
+    m.onclick=function(e){if(e.target===m)m.remove()};document.body.appendChild(m);
+}
+function removeItem(i){var c=JSON.parse(localStorage.getItem('sc')||'[]');c.splice(i,1);localStorage.setItem('sc',JSON.stringify(c));updateCartUI()}
+async function submitOrder(){
+    var c=JSON.parse(localStorage.getItem('sc')||'[]');var ph=document.getElementById('cartPhone');var phone=ph?ph.value.trim():'';
+    if(!c.length)return toast('Empty');if(!phone)return toast('Enter phone');
+    await fetch(SHEET,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:'SINMA-'+Date.now(),phone:phone,items:c})});
+    toast('✅ Order Submitted!');localStorage.removeItem('sc');updateCartUI();document.querySelectorAll('.modal').forEach(function(m){m.remove()});
+}
 
-    function openCart() {
-      var c = JSON.parse(localStorage.getItem('sc') || '[]');
-      var m = document.createElement('div');
-      m.className = 'modal';
-      m.style.display = 'flex';
-      m.innerHTML = '<div class="modal-content"><div style="display:flex;justify-content:space-between;"><h3>🛒 Cart (' + c.length + ')</h3><button onclick="this.closest(\'.modal\').remove()">✕</button></div><div style="max-height:300px;overflow-y:auto;">' + (c.length ? c.map(function(item, i) {
-        return '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;"><div><p>' + item.title + '</p><p style="color:#ff5000;">' + fmtKs(item.totalKs) + '</p></div><button onclick="removeItem(' + i + ');this.closest(\'.modal\').remove();openCart()">🗑</button></div>'
-      }).join('') : '<p style="text-align:center;padding:40px;">Empty</p>') + '</div><p style="font-size:10px;color:#ff5000;">📦 Shipping: 1Kg = 30,000 Ks</p><input type="tel" id="cartPhone" placeholder="Phone" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;margin:12px 0;"><button onclick="submitOrder()" class="btn-orange">📤 Submit Order</button></div>';
-      m.onclick = function(e) {
-        if (e.target === m) m.remove()
-      };
-      document.body.appendChild(m);
-    }
-
-    function removeItem(i) {
-      var c = JSON.parse(localStorage.getItem('sc') || '[]');
-      c.splice(i, 1);
-      localStorage.setItem('sc', JSON.stringify(c));
-      updateCartUI()
-    }
-    async function submitOrder() {
-      var c = JSON.parse(localStorage.getItem('sc') || '[]');
-      var ph = document.getElementById('cartPhone');
-      var phone = ph ? ph.value.trim() : '';
-      if (!c.length) return toast('Empty');
-      if (!phone) return toast('Enter phone');
-      await fetch(SHEET, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          orderId: 'SINMA-' + Date.now(),
-          phone: phone,
-          items: c
-        })
-      });
-      toast('✅ Order Submitted!');
-      localStorage.removeItem('sc');
-      updateCartUI();
-      document.querySelectorAll('.modal').forEach(function(m) {
-        m.remove()
-      });
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      updateCartUI();
-      loadProducts('shoes')
-    });
-  </script>
+document.addEventListener('DOMContentLoaded',function(){createDots();setInterval(nextSlide,4000);updateCartUI();loadProducts('shoes')});
+</script>
 </body>
-
 </html>
